@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: bancswissunique-bancswissunique-poi-backend-app-dev
+  annotations:
+    argocd/app-name: bancswissunique-bancswissunique-poi-backend-app-dev
+    backstage.io/kubernetes-id: bancswissunique-bancswissunique-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: bancswissunique
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=bancswissunique-bancswissunique-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: Summit23Janus2/bancswissunique-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/dev-pipelines/ns/bancswissunique/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/k8s/ns/bancswissunique/deployments/bancswissunique-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.summit23blues.6mbu.p1.openshiftapps.com/#https://github.com/Summit23Janus2/bancswissunique-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/bancswissunique"
+  system: workshop-system-bancswissunique
+  providesApis:
+    - backend-api-bancswissunique
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-bancswissunique
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:default/bancswissunique"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-bancswissunique
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://bancswissunique-poi-backend-app-bancswissunique.apps.summit23blues.6mbu.p1.openshiftapps.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/Summit23Janus2/bancswissunique-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/bancswissunique"
+  system: workshop-system-bancswissunique
+  definition:
+    $text: https://github.com/Summit23Janus2/bancswissunique-backend/tree/main/src/main/resources/META-INF/openapi.yaml
